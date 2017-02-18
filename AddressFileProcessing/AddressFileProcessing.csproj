@@ -43,13 +43,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Csv\Reader\FileEntriesProvider.cs" />
-    <Compile Include="Csv\Reader\IEntriesProvider.cs" />
-    <Compile Include="Csv\Writer\FileEntriesWriter.cs" />
-    <Compile Include="Csv\Writer\IEntriesWriter.cs" />
+    <Compile Include="IO\Reader\FileEntriesProvider.cs" />
+    <Compile Include="IO\Reader\IEntriesProvider.cs" />
+    <Compile Include="IO\Writer\FileEntriesWriter.cs" />
+    <Compile Include="IO\Writer\IEntriesWriter.cs" />
     <Compile Include="Models\Address.cs" />
     <Compile Include="Models\NameFrequency.cs" />
-    <Compile Include="Parsing\ParsingException.cs" />
+    <Compile Include="Parsing\CsvEntryParsingException.cs" />
     <Compile Include="Parsing\PersonCsvEntryParser.cs" />
     <Compile Include="Models\Person.cs" />
     <Compile Include="Processing\Processor.cs" />
@@ -64,7 +64,6 @@
     <None Include="data.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Readme.md" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

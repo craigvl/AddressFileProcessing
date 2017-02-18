@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace AddressFileProcessing.Csv.Reader
+namespace AddressFileProcessing.IO.Reader
 {
     public interface IEntriesProvider
     {

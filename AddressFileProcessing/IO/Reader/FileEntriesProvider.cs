@@ -2,8 +2,11 @@
 using System.IO;
 using System.Linq;
 
-namespace AddressFileProcessing.Csv.Reader
+namespace AddressFileProcessing.IO.Reader
 {
+    /// <summary>
+    /// Provide support for reading a list of entries (text lines) from a file.
+    /// </summary>
     internal class FileEntriesProvider : IEntriesProvider
     {
         private readonly bool _excludeHeader;

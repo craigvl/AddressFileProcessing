@@ -59,6 +59,7 @@ namespace AddressFileProcessing.Storage
         public IReadOnlyCollection<Address> GetOrderedAddresses() =>                    
             _persons
                 .Select(personAddress => personAddress.Address)
+                .Distinct()
                 .OrderBy(address => address.StreetName)
                 .ToList()
                 .AsReadOnly();

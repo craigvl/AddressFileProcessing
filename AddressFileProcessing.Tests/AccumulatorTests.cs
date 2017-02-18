@@ -18,7 +18,7 @@ namespace AddressFileProcessing.Tests
 
 
         [Test]
-        public void Append_SameNameEntry_ShouldAggregateFrequency()
+        public void Append_TwoEntriesWithSameName_ShouldAggregateFrequency()
         {
             // arrange
             var inputSet = new []
@@ -41,6 +41,24 @@ namespace AddressFileProcessing.Tests
         }
 
         [Test]
+        public void Append_TwoEntriesWithSameAddress_ShouldAggregateIntoOneAddress()
+        {
+            // arrange
+            var inputSet = new[]
+            {
+                new Person("jo", "valjean", "champ-elysees", "40"),
+                new Person("jo", "valjean", "champ-elysees", "40")
+            };
+
+            _accumulator.Append(inputSet);
+            // act
+            var actualAddresses = _accumulator.GetOrderedAddresses();
+
+            // assert
+            Assert.AreEqual(1, actualAddresses.Count);
+        }
+
+        [Test]
         public void Append_SingleEntry_ShouldReturnTwoNamesAndOneAddresses()
         {
             // arrange
@@ -59,29 +77,10 @@ namespace AddressFileProcessing.Tests
             Assert.AreEqual(2, actualNames.Count);
         }
 
-        [Test]
-        public void Append_SingleEntryWithSameName_ShouldAggregateIntoOneName()
-        {
-            // arrange
-            var inputSet = new[]
-            {
-                new Person("jo", "valjean", "champ-elysees", "40")
-            };
 
-            _accumulator.Append(inputSet);
-            // act
-            var actualAddresses = _accumulator.GetOrderedAddresses();
-            var actualNames = _accumulator.GetNameFrequencies();
-
-            // assert
-            Assert.AreEqual(1, actualAddresses.Count);
-            Assert.AreEqual(1, actualNames.Count);
-            Assert.AreEqual(2, actualNames.Single().Frequency);
-
-        }
 
         [Test]
-        public void Append_WithManyEntry_ShouldOrderNamesByFrequencyAndThenByFirstName()
+        public void Append_ManyEntry_ShouldOrderNamesByFrequencyAndThenByFirstName()
         {
             // arrange
             var inputSet = new[]
@@ -113,7 +112,7 @@ namespace AddressFileProcessing.Tests
 
 
         [Test]
-        public void Append_WithSameNameEntry_ShouldAggregateSingleNameFrequency()
+        public void Append_ManySameNameEntries_ShouldAggregateSingleNameFrequency()
         {
             // arrange
             var inputSet = new[]

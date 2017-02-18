@@ -21,7 +21,7 @@ namespace AddressFileProcessing.Tests
             var input = "OnlyOneField";
 
             // act & assert
-            Assert.Throws<ParsingException>(() => _parser.Parse(input),
+            Assert.Throws<CsvEntryParsingException>(() => _parser.Parse(input),
                  $"Error when parsing input: '{input}'. Field index: '{2}' has erroneous value: '{input}'.");
         }
 
@@ -33,7 +33,7 @@ namespace AddressFileProcessing.Tests
             var input = "OnlyOneField";
 
             // act & assert
-            Assert.Throws<ParsingException>(() => _parser.Parse(input),
+            Assert.Throws<CsvEntryParsingException>(() => _parser.Parse(input),
                 $"Not enough fields found when parsing input: '{input}'. Expected: '{3}', actual: '{1}'.");
         }
 

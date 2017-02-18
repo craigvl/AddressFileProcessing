@@ -17,6 +17,16 @@ namespace AddressFileProcessing.Models
         public bool Equals(Address other)
             => (other != null) && StreetName.Equals(other.StreetName) && StreetNumber.Equals(other.StreetNumber);
 
+        // required for Linq Distinct() ... 
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                return (StreetNumber ?? string.Empty).GetHashCode() + (StreetName ?? string.Empty).GetHashCode();
+            }
+        }
+
+
         public string ToCsvEntry() => $"{StreetNumber} {StreetName}"; // only one field
     }
 }

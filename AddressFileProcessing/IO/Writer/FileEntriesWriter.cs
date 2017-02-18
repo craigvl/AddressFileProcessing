@@ -1,8 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 
-namespace AddressFileProcessing.Csv.Writer
+namespace AddressFileProcessing.IO.Writer
 {
+    /// <summary>
+    /// Provide support for saving a list of entries (text lines) into a file.
+    /// </summary>
     public class FileEntriesWriter : IEntriesWriter
     {
         private readonly string _filePath;

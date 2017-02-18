@@ -1,11 +1,18 @@
 ﻿using System.Linq;
-using AddressFileProcessing.Csv.Reader;
-using AddressFileProcessing.Csv.Writer;
+using AddressFileProcessing.IO.Reader;
+using AddressFileProcessing.IO.Writer;
 using AddressFileProcessing.Parsing;
 using AddressFileProcessing.Storage;
 
 namespace AddressFileProcessing.Processing
 {
+    /// <summary>
+    /// Self contained component to orchestrate a run. 
+    /// 1) Read from the provider, 
+    /// 2) Accumulate/store the data,
+    /// 3) Generate the results
+    /// 4) Persist them.
+    /// </summary>
     internal class Processor
     {
         private readonly IEntriesWriter _nameFrequenciesWriter;
@@ -13,14 +20,14 @@ namespace AddressFileProcessing.Processing
         private readonly IEntriesProvider _personAddressProvider;
 
         public Processor(
-            IEntriesProvider personAddressProvider, 
-            IEntriesWriter orderedAddressesWriter,
-            IEntriesWriter nameFrequenciesWriter
+            IEntriesProvider personAddressProvider,
+            IEntriesWriter nameFrequenciesWriter,
+            IEntriesWriter orderedAddressesWriter
             )
         {
             _personAddressProvider = personAddressProvider;
-            _orderedAddressesWriter = orderedAddressesWriter;
             _nameFrequenciesWriter = nameFrequenciesWriter;
+            _orderedAddressesWriter = orderedAddressesWriter;
         }
 
         public void Process()
@@ -28,15 +35,17 @@ namespace AddressFileProcessing.Processing
             var personAddressEntryParser = new PersonCsvEntryParser();
             var accumulator = new Accumulator();
 
-            // collect entries from the text lines provider
+            // collect and parse the entries from the data provider
             var entries = _personAddressProvider
                 .ReadAll()
                 .Select(personAddressEntryParser.Parse);
 
+            // store the entries in the accumulator
             accumulator.Append(entries);
 
-            _orderedAddressesWriter.Save(accumulator.GetOrderedAddresses().Select(address => address.ToCsvEntry()));
+            // get the result, persist them to the writers
             _nameFrequenciesWriter.Save(accumulator.GetNameFrequencies().Select(name => name.ToCsvEntry()));
+            _orderedAddressesWriter.Save(accumulator.GetOrderedAddresses().Select(address => address.ToCsvEntry()));
         }
     }
 }

@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using AddressFileProcessing.Csv.Reader;
-using AddressFileProcessing.Csv.Writer;
+using AddressFileProcessing.IO.Reader;
+using AddressFileProcessing.IO.Writer;
 using AddressFileProcessing.Processing;
 using Moq;
 using NUnit.Framework;
@@ -21,7 +21,7 @@ namespace AddressFileProcessing.Tests
             _namesFrequencyWriter = new Mock<IEntriesWriter>();
             _addressesWriter = new Mock<IEntriesWriter>();
 
-            _processor = new Processor(_personAddressReader.Object, _addressesWriter.Object, _namesFrequencyWriter.Object);
+            _processor = new Processor(_personAddressReader.Object, _namesFrequencyWriter.Object, _addressesWriter.Object);
         }
 
         private Mock<IEntriesProvider> _personAddressReader;

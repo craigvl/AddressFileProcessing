@@ -1,6 +1,6 @@
 ﻿using System;
-using AddressFileProcessing.Csv.Reader;
-using AddressFileProcessing.Csv.Writer;
+using AddressFileProcessing.IO.Reader;
+using AddressFileProcessing.IO.Writer;
 using AddressFileProcessing.Processing;
 
 namespace AddressFileProcessing
@@ -22,9 +22,7 @@ namespace AddressFileProcessing
             var outputAddressesFile = argOrDefaut(2, "addresses.csv");
 
             Console.WriteLine($"This file will be read: {inputFile} ");
-            Console.WriteLine(
-                $"Theses files for names and addresses will be created: {outputNamesFile} and {outputAddressesFile}.");
-
+          
             Console.WriteLine("Processing ... ");
 
             try
@@ -37,15 +35,16 @@ namespace AddressFileProcessing
 
                 processor.Process();
                 Console.WriteLine("Processing done.");
-
+                Console.WriteLine($"The output files for names and addresses has been created: {outputNamesFile} and {outputAddressesFile}.");
             }
             catch (Exception ex)
             {
                 Console.WriteLine("Oups, something went wrong with the processing, details follows ... ");
                 Console.WriteLine(ex.Message);
-
-
             }
+
+            Console.WriteLine("Press 'Enter' to exit.");
+            Console.ReadLine();
 
 
         }
