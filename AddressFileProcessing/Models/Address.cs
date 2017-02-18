@@ -2,7 +2,7 @@
 
 namespace AddressFileProcessing.Models
 {
-    public class Address : IEquatable<Address>
+    internal class Address : IEquatable<Address>
     {
         public Address(string streetName, string streetNumber)
         {

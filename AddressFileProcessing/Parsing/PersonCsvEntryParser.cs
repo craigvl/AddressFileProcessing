@@ -3,17 +3,17 @@ using AddressFileProcessing.Models;
 
 namespace AddressFileProcessing.Parsing
 {
-    internal class PersonAddressCsvEntryParser
+    internal class PersonCsvEntryParser
     {
         private const int FieldsCount = 3; // FirstName, LastName, Address
         private readonly char _fieldSeparator;
 
-        public PersonAddressCsvEntryParser(char fieldSeparator = ',')
+        public PersonCsvEntryParser(char fieldSeparator = ',')
         {
             _fieldSeparator = fieldSeparator;
         }
 
-        public PersonAddress Parse(string input)
+        public Person Parse(string input)
         {
             // get required fields
             var fields = input.Split(new[] {_fieldSeparator}, StringSplitOptions.RemoveEmptyEntries);
@@ -25,7 +25,7 @@ namespace AddressFileProcessing.Parsing
 
             if(addressFields.Length < 2)  throw ParsingException.FromErroneousField(input, 2, fields[2]);
             
-            return new PersonAddress(fields[0], fields[1], addressFields[1], addressFields[0]);
+            return new Person(fields[0], fields[1], addressFields[1], addressFields[0]);
         }
     }
 }

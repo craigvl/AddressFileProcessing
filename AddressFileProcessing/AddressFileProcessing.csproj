@@ -44,12 +44,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\Address.cs" />
-    <Compile Include="Models\Person.cs" />
-    <Compile Include="Models\PersonFrequency.cs" />
+    <Compile Include="Models\NameFrequency.cs" />
     <Compile Include="Parsing\ParsingException.cs" />
-    <Compile Include="Parsing\PersonAddressCsvParser.cs" />
-    <Compile Include="Models\PersonAddress.cs" />
-    <Compile Include="Processing\Accumulator.cs" />
+    <Compile Include="Parsing\PersonCsvEntryParser.cs" />
+    <Compile Include="Models\Person.cs" />
+    <Compile Include="Storage\Accumulator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

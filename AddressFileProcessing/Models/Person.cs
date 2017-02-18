@@ -1,11 +1,10 @@
-﻿using System;
-
-namespace AddressFileProcessing.Models
+﻿namespace AddressFileProcessing.Models
 {
-    public class Person : IEquatable<Person>
+    internal class Person 
     {
-        public Person(string firstName, string lastName)
+        public Person(string firstName, string lastName, string streetName, string streetNumber) 
         {
+            Address = new Address(streetName, streetNumber);
             FirstName = firstName;
             LastName = lastName;
         }
@@ -15,6 +14,8 @@ namespace AddressFileProcessing.Models
 
         // mainly here for unit tests
         public bool Equals(Person other)
-            => (other != null) && FirstName.Equals(other.FirstName) && LastName.Equals(other.LastName);
+            => (other != null) && FirstName.Equals(other.FirstName) && LastName.Equals(other.LastName) && Address.Equals(other.Address);
+
+        public Address Address { get; set; }
     }
 }

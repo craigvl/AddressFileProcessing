@@ -2,30 +2,30 @@ using System.Collections.Generic;
 using System.Linq;
 using AddressFileProcessing.Models;
 
-namespace AddressFileProcessing.Processing
+namespace AddressFileProcessing.Storage
 {
     /// <summary>
-    /// This component calculate the name frequencies & List of Street for the PersonAddress items
-    /// contained. It could also be seen roughly as a 'PersonAddress' repository
+    /// This component calculate the name frequencies & List of Street for the Person items
+    /// contained. It could also be seen roughly as a 'Person' repository
     /// It is a separate component from the 'Processor' to allow testing on its own
     /// It allows an append & clear, if at some point we decide to feed it data by chunk 
     /// </summary>
     internal class Accumulator
     {
-        private readonly List<PersonAddress> _addresses;
+        private readonly List<Person> _persons;
 
         public Accumulator()
         {
-            _addresses = new List<PersonAddress>();
+            _persons = new List<Person>();
         }
 
         /// <summary>
         /// Add more data to the accumulator/repository
         /// </summary>
         /// <param name="personAddresses"></param>
-        public void Append(IEnumerable<PersonAddress> personAddresses)
+        public void Append(IEnumerable<Person> personAddresses)
         {
-            _addresses.AddRange(personAddresses);
+            _persons.AddRange(personAddresses);
         }
 
         /// <summary>
@@ -33,21 +33,22 @@ namespace AddressFileProcessing.Processing
         /// </summary>
         public void Clear()
         {
-            _addresses.Clear();
+            _persons.Clear();
         }
 
         /// <summary>
-        /// Get a list of names frequency for the records collected 
+        /// Get a list of names frequency for the records collected by merging first and Last Name in the same list
         /// </summary>
-        /// <returns>List of name frequency (FirstName, LastName, Frequency) sorted by Highest Frequency, then FirstName and LastName alphabetically 
+        /// <returns>List of name frequency (Name, Frequency) sorted by Highest Frequency, then Name alphabetically 
         /// </returns>
-        public IReadOnlyCollection<PersonFrequency> GetNameFrequencies() =>
-            _addresses
-                .GroupBy(personAddress => new {personAddress.FirstName, personAddress.LastName})
-                .Select(group => new PersonFrequency(group.Key.FirstName, group.Key.LastName, group.Count()))
+        public IReadOnlyCollection<NameFrequency> GetNameFrequencies() =>
+            _persons
+                .Select(person => person.FirstName)
+                .Concat(_persons.Select(person => person.LastName))
+                .GroupBy(name => name)
+                .Select(group => new NameFrequency(group.Key, group.Count()))
                 .OrderByDescending(person => person.Frequency)
-                .ThenBy(person => person.FirstName)
-                .ThenBy(person => person.LastName)
+                .ThenBy(nameFrequency => nameFrequency.Name)
                 .ToList()
                 .AsReadOnly();
 
@@ -56,7 +57,7 @@ namespace AddressFileProcessing.Processing
         /// </summary>
         /// <returns>List of all addresses, sorted by StreetName alphabetically </returns>
         public IReadOnlyCollection<Address> GetOrderedAddresses() =>                    
-            _addresses
+            _persons
                 .Select(personAddress => personAddress.Address)
                 .OrderBy(address => address.StreetName)
                 .ToList()
