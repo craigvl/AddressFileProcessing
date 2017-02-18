@@ -12,10 +12,10 @@
         public string FirstName { get; set; }
         public string LastName { get; set; }
 
+        public Address Address { get; set; }
+
         // mainly here for unit tests
         public bool Equals(Person other)
             => (other != null) && FirstName.Equals(other.FirstName) && LastName.Equals(other.LastName) && Address.Equals(other.Address);
-
-        public Address Address { get; set; }
     }
 }

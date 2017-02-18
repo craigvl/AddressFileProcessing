@@ -43,11 +43,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Csv\Reader\FileEntriesProvider.cs" />
+    <Compile Include="Csv\Reader\IEntriesProvider.cs" />
+    <Compile Include="Csv\Writer\FileEntriesWriter.cs" />
+    <Compile Include="Csv\Writer\IEntriesWriter.cs" />
     <Compile Include="Models\Address.cs" />
     <Compile Include="Models\NameFrequency.cs" />
     <Compile Include="Parsing\ParsingException.cs" />
     <Compile Include="Parsing\PersonCsvEntryParser.cs" />
     <Compile Include="Models\Person.cs" />
+    <Compile Include="Processing\Processor.cs" />
     <Compile Include="Storage\Accumulator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -16,6 +16,30 @@ namespace AddressFileProcessing.Tests
 
         private Accumulator _accumulator;
 
+
+        [Test]
+        public void Append_SameNameEntry_ShouldAggregateFrequency()
+        {
+            // arrange
+            var inputSet = new []
+            {
+                new Person("jo", "valjean", "champ-elysees", "40"),
+                new Person("jo", "valjean", "champ-elysees", "1")
+            };
+
+            // act
+            _accumulator.Append(inputSet);
+
+            var actualAddresses = _accumulator.GetOrderedAddresses();
+            var actualNames = _accumulator.GetNameFrequencies();
+
+            // assert
+            Assert.AreEqual(2, actualAddresses.Count);
+            Assert.AreEqual(2, actualNames.Count);
+            Assert.AreEqual(2, actualNames.First().Frequency);
+            Assert.AreEqual(2, actualNames.Last().Frequency);
+        }
+
         [Test]
         public void Append_SingleEntry_ShouldReturnTwoNamesAndOneAddresses()
         {
@@ -56,57 +80,6 @@ namespace AddressFileProcessing.Tests
 
         }
 
-
-        [Test]
-        public void Append_SameNameEntry_ShouldAggregateFrequency()
-        {
-            // arrange
-            var inputSet = new []
-            {
-                new Person("jo", "valjean", "champ-elysees", "40"),
-                new Person("jo", "valjean", "champ-elysees", "1")
-            };
-
-            // act
-            _accumulator.Append(inputSet);
-
-            var actualAddresses = _accumulator.GetOrderedAddresses();
-            var actualNames = _accumulator.GetNameFrequencies();
-
-            // assert
-            Assert.AreEqual(2, actualAddresses.Count);
-            Assert.AreEqual(2, actualNames.Count);
-            Assert.AreEqual(2, actualNames.First().Frequency);
-            Assert.AreEqual(2, actualNames.Last().Frequency);
-        }
-
-
-        [Test]
-        public void Append_WithSameNameEntry_ShouldAggregateSingleNameFrequency()
-        {
-            // arrange
-            var inputSet = new[]
-            {
-                new Person("jean", "jean", "bee lane", "1"),
-                new Person("jean", "jean", "apple st", "40"),
-                new Person("jean", "jean", "cat way", "4")
-            };
-
-            var expectedAddresses = new[]
-            {
-                new Address("apple st", "40"),
-                new Address("bee lane", "1"),
-                new Address("cat way", "4")
-            };
-
-            // act           
-            _accumulator.Append(inputSet);
-            var actualAddresses = _accumulator.GetOrderedAddresses();
-
-            // assert
-            CollectionAssert.AreEqual(expectedAddresses, actualAddresses);
-        }
-
         [Test]
         public void Append_WithManyEntry_ShouldOrderNamesByFrequencyAndThenByFirstName()
         {
@@ -136,6 +109,33 @@ namespace AddressFileProcessing.Tests
 
             // assert
             Assert.AreEqual(expectedNames, actualNames);
+        }
+
+
+        [Test]
+        public void Append_WithSameNameEntry_ShouldAggregateSingleNameFrequency()
+        {
+            // arrange
+            var inputSet = new[]
+            {
+                new Person("jean", "jean", "bee lane", "1"),
+                new Person("jean", "jean", "apple st", "40"),
+                new Person("jean", "jean", "cat way", "4")
+            };
+
+            var expectedAddresses = new[]
+            {
+                new Address("apple st", "40"),
+                new Address("bee lane", "1"),
+                new Address("cat way", "4")
+            };
+
+            // act           
+            _accumulator.Append(inputSet);
+            var actualAddresses = _accumulator.GetOrderedAddresses();
+
+            // assert
+            CollectionAssert.AreEqual(expectedAddresses, actualAddresses);
         }
     }
 }

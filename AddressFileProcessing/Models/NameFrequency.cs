@@ -15,7 +15,7 @@ namespace AddressFileProcessing.Models
 
         // for unit tests mostly
         public bool Equals(NameFrequency other)
-         => other != null && Name.Equals(other.Name) && Frequency.Equals(other.Frequency);
+         => (other != null) && Name.Equals(other.Name) && Frequency.Equals(other.Frequency);
 
         public string ToCsvEntry(char separator = ',') => $"{Name}{separator}{Frequency}";
     }

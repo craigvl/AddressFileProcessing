@@ -60,6 +60,7 @@
   <ItemGroup>
     <Compile Include="AccumulatorTests.cs" />
     <Compile Include="PersonCsvEntryParserTests.cs" />
+    <Compile Include="ProcessorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
