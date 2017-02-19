@@ -13,11 +13,11 @@
 
 ## Run the executable (command line)
 
-The executable (AddressFileProcessing.exe) should be used with 3 parameters (if not provided they will be set to : _data.csv_ _names.csv_ _addresses.csv_ 
-
 ```
 AddressFileProcessing <inputfile> <namefile> <addressesfile>
 ```
+
+The executable (AddressFileProcessing.exe) should be used with 3 parameters (if not provided they will be set to : _data.csv_ _names.csv_ _addresses.csv_ 
 
 The input file must be located in the same folder as the executable. The output files will be created in this folder too, given that program executed successfully.
 
