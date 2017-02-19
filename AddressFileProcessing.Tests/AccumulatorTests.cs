@@ -16,69 +16,6 @@ namespace AddressFileProcessing.Tests
 
         private Accumulator _accumulator;
 
-
-        [Test]
-        public void Append_TwoEntriesWithSameName_ShouldAggregateFrequency()
-        {
-            // arrange
-            var inputSet = new []
-            {
-                new Person("jo", "valjean", "champ-elysees", "40"),
-                new Person("jo", "valjean", "champ-elysees", "1")
-            };
-
-            // act
-            _accumulator.Append(inputSet);
-
-            var actualAddresses = _accumulator.GetOrderedAddresses();
-            var actualNames = _accumulator.GetNameFrequencies();
-
-            // assert
-            Assert.AreEqual(2, actualAddresses.Count);
-            Assert.AreEqual(2, actualNames.Count);
-            Assert.AreEqual(2, actualNames.First().Frequency);
-            Assert.AreEqual(2, actualNames.Last().Frequency);
-        }
-
-        [Test]
-        public void Append_TwoEntriesWithSameAddress_ShouldAggregateIntoOneAddress()
-        {
-            // arrange
-            var inputSet = new[]
-            {
-                new Person("jo", "valjean", "champ-elysees", "40"),
-                new Person("jo", "valjean", "champ-elysees", "40")
-            };
-
-            _accumulator.Append(inputSet);
-            // act
-            var actualAddresses = _accumulator.GetOrderedAddresses();
-
-            // assert
-            Assert.AreEqual(1, actualAddresses.Count);
-        }
-
-        [Test]
-        public void Append_SingleEntry_ShouldReturnTwoNamesAndOneAddresses()
-        {
-            // arrange
-            var inputSet = new []
-            {
-                new Person("jo", "valjean", "champ-elysees", "40")
-            };
-
-            _accumulator.Append(inputSet);
-            // act
-            var actualAddresses = _accumulator.GetOrderedAddresses();
-            var actualNames = _accumulator.GetNameFrequencies();
-
-            // assert
-            Assert.AreEqual(1, actualAddresses.Count);
-            Assert.AreEqual(2, actualNames.Count);
-        }
-
-
-
         [Test]
         public void Append_ManyEntry_ShouldOrderNamesByFrequencyAndThenByFirstName()
         {
@@ -135,6 +72,63 @@ namespace AddressFileProcessing.Tests
 
             // assert
             CollectionAssert.AreEqual(expectedAddresses, actualAddresses);
+        }
+
+        [Test]
+        public void Append_SingleEntry_ShouldReturnTwoNamesAndOneAddresses()
+        {
+            // arrange
+            var inputSet = new []
+            {
+                new Person("jo", "valjean", "champ-elysees", "40")
+            };
+
+            // act
+            _accumulator.Append(inputSet);
+            var actualAddresses = _accumulator.GetOrderedAddresses();
+            var actualNames = _accumulator.GetNameFrequencies();
+
+            // assert
+            Assert.AreEqual(1, actualAddresses.Count);
+            Assert.AreEqual(2, actualNames.Count);
+        }
+
+        [Test]
+        public void Append_TwoEntriesWithSameAddress_ShouldAggregateIntoOneAddress()
+        {
+            // arrange
+            var inputSet = new[]
+            {
+                new Person("jo", "valjean", "champ-elysees", "40"),
+                new Person("jo", "valjean", "champ-elysees", "40")
+            };
+
+            // act
+            _accumulator.Append(inputSet);
+            var actualAddresses = _accumulator.GetOrderedAddresses();
+
+            // assert
+            Assert.AreEqual(1, actualAddresses.Count);
+        }
+
+        [Test]
+        public void Append_TwoEntriesWithSameName_ShouldAggregateFrequency()
+        {
+            // arrange
+            var inputSet = new []
+            {
+                new Person("jo", "valjean", "champ-elysees", "40"),
+                new Person("jo", "valjean", "champ-elysees", "1")
+            };
+
+            // act
+            _accumulator.Append(inputSet);
+            var actualNames = _accumulator.GetNameFrequencies();
+
+            // assert
+            Assert.AreEqual(2, actualNames.Count);
+            Assert.AreEqual(2, actualNames.First().Frequency);
+            Assert.AreEqual(2, actualNames.Last().Frequency);
         }
     }
 }

@@ -7,13 +7,11 @@ namespace AddressFileProcessing
 {
     internal class Program
     {
-
-
         private static void Main(string[] args)
         {
             Func<int, string, string> argOrDefaut =
                 (argIndex, defautValue) =>
-                    args.Length > argIndex && !string.IsNullOrWhiteSpace(args[argIndex])
+                    (args.Length > argIndex) && !string.IsNullOrWhiteSpace(args[argIndex])
                         ? args[argIndex]
                         : defautValue;
 
