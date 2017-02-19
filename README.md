@@ -77,7 +77,7 @@ Jimmy,1
 John,1
 ```
 
-## Project Structure (where is what?)
+# Project Structure (where is what?)
 ```
 /IO
    /Reader : component to read a text file and a generic interface for reading text content
